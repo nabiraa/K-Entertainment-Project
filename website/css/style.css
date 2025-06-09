@@ -34,6 +34,11 @@ body {
     display: flex;
     flex-direction: column; /* For sticky footer */
     min-height: 100vh; /* Ensure body takes at least full viewport height */
+    padding-top: 5rem; /* NEW: Add padding to push content below the fixed header */
+}
+/* Adjust padding for the home page specifically since its content is full height slideshow */
+.home-page {
+    padding-top: 0 !important; /* Remove padding-top for home page */
 }
 
 .page-content {
@@ -85,7 +90,7 @@ button:hover, .action-button:hover {
 
 /* Header & Navigation */
 .main-header {
-    background-color: rgba(44, 44, 77, 0.5); /* Semi-transparent background */
+    background-color: rgba(44, 44, 77, 0.5); /* Starts semi-transparent */
     padding: 0.9375rem 2.5rem; /* Responsive padding */
     display: flex;
     justify-content: space-between;
@@ -605,7 +610,7 @@ input[type="file"]::file-selector-button:hover {
     background-color: var(--bg-light);
     color: var(--text-color);
     text-align: center;
-    padding: 1.25rem;
+    padding: 0.75rem; /* REDUCED PADDING for smaller footer */
     margin-top: auto; /* Pushes footer to the bottom */
     box-shadow: 0 -0.125rem 0.625rem rgba(0, 0, 0, 0.2);
 }
@@ -643,6 +648,9 @@ input[type="file"]::file-selector-button:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        padding-top: 4.5rem; /* Adjust padding-top for smaller header on mobile */
+    }
     .main-header {
         flex-direction: column;
         padding: 0.9375rem 1.25rem; /* Adjust padding for mobile */

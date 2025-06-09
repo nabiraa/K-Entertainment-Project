@@ -39,7 +39,7 @@ body {
 .page-content {
     flex: 1; /* Allows content to expand and push footer down */
     padding: 2.5rem 1.25rem; /* Responsive padding */
-    max-width: 75rem; /* Max width for content, approx 1200px */
+    max-width: 81rem; /* Max width for content, approx 1200px */
     margin: 2rem auto; /* Top/bottom margin, auto left/right for centering */
     background-color: var(--bg-light);
     border-radius: 0.5rem; /* Rounded corners */

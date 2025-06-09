@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-Entertainment Co. | Home</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css"> <!-- Corrected to styles.css -->
+    <!-- Google Fonts: A mix of bold/blocky (e.g., Montserrat) and a swirly/elegant (e.g., Great Vibes, Playfair Display for accents) -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -44,45 +45,24 @@
     <main class="page-content home-page">
         <section class="slideshow-container">
             <div class="mySlides fade">
-                <img src="images/hybe-slideshow-img-1.png" style="width:100%">
+                <img src="images/slideshow_1.png" alt="Latest Album Release">
                 <div class="slide-text">Latest Album Release!</div>
             </div>
             <div class="mySlides fade">
-                <img src="images/hybe-slideshow-img-2.jpg" style="width:100%">
+                <img src="images/slideshow_2.jpg" alt="New Artist Debut">
                 <div class="slide-text">New Artist Debut!</div>
             </div>
             <div class="mySlides fade">
-                <img src="images/slideshow_3.jpg" style="width:100%">
+                <img src="images/slideshow_3.jpg" alt="World Tour Announced">
                 <div class="slide-text">World Tour Announced!</div>
             </div>
+            <!-- Navigation dots -->
             <div style="text-align:center" class="slide-dots">
                 <span class="dot" onclick="currentSlide(1)"></span>
                 <span class="dot" onclick="currentSlide(2)"></span>
                 <span class="dot" onclick="currentSlide(3)"></span>
             </div>
         </section>
-
-        <!-- <section class="quick-links">
-            <h2>Quick Links</h2>
-            <div class="link-grid">
-                <a href="talent.html?type=artists" class="quick-link-item">
-                    <i class="fas fa-microphone-alt"></i>
-                    <span>Our Artists</span>
-                </a>
-                <a href="discography.html" class="quick-link-item">
-                    <i class="fas fa-compact-disc"></i>
-                    <span>Discography</span>
-                </a>
-                <a href="schedules.html" class="quick-link-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Schedules</span>
-                </a>
-                <a href="news.html" class="quick-link-item">
-                    <i class="fas fa-newspaper"></i>
-                    <span>Latest News</span>
-                </a>
-            </div>
-        </section> -->
     </main>
 
     <footer class="main-footer">
@@ -96,7 +76,10 @@
         </div>
     </footer>
 
+    <!-- FontAwesome for icons (e.g., dropdown arrow, social media) -->
+    <!-- REMEMBER TO REPLACE "your_font_awesome_kit_code.js" with your actual Font Awesome Kit URL -->
     <script src="https://kit.fontawesome.com/your_font_awesome_kit_code.js" crossorigin="anonymous"></script>
+    <!-- Main UI JavaScript -->
     <script src="js/script.js"></script>
     <script src="js/home-slideshow.js"></script>
 </body>

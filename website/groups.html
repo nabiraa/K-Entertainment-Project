@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-Entertainment Co. | [Page Title Here]</title>
+    <title>K-Entertainment Co. | Groups</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>
@@ -41,35 +41,6 @@
         </nav>
     </header>
 
-    <main class="page-content">
-        ```
-
-**Core `_footer.html` (or `_footer.php`) - Reusable Footer Snippet**
-Include this at the bottom of every page.
-
-```html
-    </main> <footer class="main-footer">
-        <div class="footer-content">
-            <p>&copy; 2025 K-Entertainment Co. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://kit.fontawesome.com/your_font_awesome_kit_code.js" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
-    </body>
-</html>
-
-<title>K-Entertainment Co. | Groups</title>
-</head>
-<body>
-    <header class="main-header">
-        </header>
-
     <main class="page-content groups-page">
         <h1>Our Groups</h1>
 
@@ -101,6 +72,7 @@ Include this at the bottom of every page.
                 <select id="groupMembers" name="group_members[]" multiple>
                     <option value="1">Artist 1</option>
                     <option value="2">Artist 2</option>
+                    <option value="3">Artist 3</option>
                 </select>
 
                 <div class="form-actions">
@@ -113,13 +85,23 @@ Include this at the bottom of every page.
         <section class="group-display">
             <div id="groupGrid" class="group-grid">
                 <div class="group-card">
-                    <img src="images/group_placeholder.jpg" alt="Group Name">
-                    <h3>Group Name</h3>
-                    <p class="group-debut">Debut: YYYY-MM-DD</p>
-                    <p class="group-members-count">Members: X</p>
+                    <img src="images/group_placeholder.jpg" alt="Music Group">
+                    <h3>The Melodies</h3>
+                    <p class="group-debut">Debut: 2020-03-15</p>
+                    <p class="group-members-count">Members: 5</p>
                     <div class="card-actions">
-                        <button class="edit-btn" data-id="1">Edit</button>
-                        <button class="delete-btn" data-id="1">Delete</button>
+                        <button class="edit-btn" data-id="101">Edit</button>
+                        <button class="delete-btn" data-id="101">Delete</button>
+                    </div>
+                </div>
+                <div class="group-card">
+                    <img src="images/group_placeholder.jpg" alt="Dance Crew">
+                    <h3>Rhythm Breakers</h3>
+                    <p class="group-debut">Debut: 2022-07-01</p>
+                    <p class="group-members-count">Members: 3</p>
+                    <div class="card-actions">
+                        <button class="edit-btn" data-id="102">Edit</button>
+                        <button class="delete-btn" data-id="102">Delete</button>
                     </div>
                 </div>
                 </div>
@@ -128,8 +110,98 @@ Include this at the bottom of every page.
     </main>
 
     <footer class="main-footer">
-        </footer>
+        <div class="footer-content">
+            <p>&copy; 2025 K-Entertainment Co. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
 
+    <script src="https://kit.fontawesome.com/your_font_awesome_kit_code.js" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
+    <script>
+        // Specific JS for Group Page controls (similar to talent.html's script for toggling forms)
+        document.addEventListener('DOMContentLoaded', () => {
+            const showAddGroupFormBtn = document.getElementById('showAddGroupFormBtn');
+            const groupFormContainer = document.getElementById('groupFormContainer');
+            const cancelGroupFormBtn = document.getElementById('cancelGroupFormBtn');
+            const groupForm = document.getElementById('groupForm');
+            const groupFormTitle = document.getElementById('groupFormTitle');
+            const groupFormMode = document.getElementById('groupFormMode');
+
+            if (showAddGroupFormBtn) {
+                showAddGroupFormBtn.addEventListener('click', () => {
+                    groupFormContainer.classList.remove('hidden');
+                    groupFormTitle.textContent = 'Add New';
+                    groupFormMode.value = 'add';
+                    groupForm.reset();
+                });
+            }
+
+            if (cancelGroupFormBtn) {
+                cancelGroupFormBtn.addEventListener('click', () => {
+                    groupFormContainer.classList.add('hidden');
+                });
+            }
+
+            const groupDisplayArea = document.querySelector('.group-display #groupGrid');
+            if (groupDisplayArea) {
+                groupDisplayArea.addEventListener('click', (event) => {
+                    if (event.target.classList.contains('edit-btn')) {
+                        const groupId = event.target.dataset.id;
+                        console.log('Edit group with ID:', groupId);
+                        alert('Edit group functionality not yet implemented via PHP. ID: ' + groupId);
+                        groupFormContainer.classList.remove('hidden');
+                        groupFormTitle.textContent = 'Edit';
+                        groupFormMode.value = 'edit';
+                        groupForm.elements['group_id'].value = groupId;
+                        groupForm.elements['group_name'].value = 'Simulated Group ' + groupId;
+                    } else if (event.target.classList.contains('delete-btn')) {
+                        const groupId = event.target.dataset.id;
+                        if (confirm('Are you sure you want to delete this group?')) {
+                            console.log('Delete group with ID:', groupId);
+                            alert('Delete group functionality not yet implemented via PHP. ID: ' + groupId);
+                            event.target.closest('.group-card').remove();
+                        }
+                    }
+                });
+            }
+
+            const groupSearchInput = document.getElementById('groupSearchInput');
+            const groupGrid = document.getElementById('groupGrid');
+            const noGroupFound = document.getElementById('noGroupFound');
+
+            function applyGroupFilters() {
+                const searchText = groupSearchInput ? groupSearchInput.value.toLowerCase() : '';
+                const groupCards = groupGrid ? groupGrid.querySelectorAll('.group-card') : [];
+                let foundCount = 0;
+
+                groupCards.forEach(card => {
+                    const name = card.querySelector('h3').textContent.toLowerCase();
+                    let display = true;
+
+                    if (searchText && !name.includes(searchText)) {
+                        display = false;
+                    }
+
+                    if (display) {
+                        card.style.display = 'block';
+                        foundCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                if (noGroupFound) {
+                    noGroupFound.classList.toggle('hidden', foundCount > 0);
+                }
+            }
+
+            if (groupSearchInput) groupSearchInput.addEventListener('keyup', applyGroupFilters);
+            applyGroupFilters(); // Initial filter call
+        });
+    </script>
 </body>
 </html>

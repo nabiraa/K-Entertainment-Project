@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Entertainment Co. | Staff & Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">K-Ent.</a>
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">About <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="about.html#company">Company</a>
+                        <a href="about.html#vision">Vision</a>
+                        <a href="about.html#history">History</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Talent <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="talent.html?type=all">All Talent</a>
+                        <a href="talent.html?type=artists">Artists</a>
+                        <a href="talent.html?type=actors">Actors</a>
+                        <a href="talent.html?type=soloists">Soloists</a>
+                        <a href="talent.html?type=groups">Groups</a>
+                    </div>
+                </li>
+                <li><a href="discography.html">Discography</a></li>
+                <li><a href="schedules.html">Schedules</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="staff.html">Staff</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page-content staff-page">
+        <h1>Staff & Management</h1>
+
+        <section class="staff-controls">
+            <button id="showAddStaffFormBtn" class="action-button">Add New Staff Member</button>
+            <input type="text" id="staffSearchInput" placeholder="Search staff...">
+            <select id="staffFilterRole">
+                <option value="all">All Roles</option>
+                <option value="CEO">CEO</option>
+                <option value="Manager">Manager</option>
+                <option value="Producer">Producer</option>
+                <option value="HR">HR</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Accountant">Accountant</option>
+            </select>
+        </section>
+
+        <section id="staffFormContainer" class="form-section hidden">
+            <h2><span id="staffFormTitle">Add New</span> Staff Member</h2>
+            <form id="staffForm" action="php/process_staff.php" method="POST">
+                <input type="hidden" id="staffId" name="staff_id">
+                <input type="hidden" id="staffFormMode" name="form_mode" value="add">
+
+                <label for="staffFullName">Full Name:</label>
+                <input type="text" id="staffFullName" name="staff_full_name" required>
+
+                <label for="staffRole">Role:</label>
+                <input type="text" id="staffRole" name="staff_role" required>
+
+                <label for="staffDepartment">Department:</label>
+                <input type="text" id="staffDepartment" name="staff_department">
+
+                <label for="staffEmail">Email:</label>
+                <input type="email" id="staffEmail" name="staff_email">
+
+                <label for="staffPhone">Phone:</label>
+                <input type="tel" id="staffPhone" name="staff_phone">
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-button">Save Staff</button>
+                    <button type="button" id="cancelStaffFormBtn" class="cancel-button">Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="staff-display">
+            <table class="staff-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="staffTableBody">
+                    <tr>
+                        <td>Kim Min-jun</td>
+                        <td>CEO</td>
+                        <td>Executive</td>
+                        <td>minjun.kim@k-ent.com</td>
+                        <td>+82 2-1234-5678</td>
+                        <td>
+                            <button class="edit-btn" data-id="401">Edit</button>
+                            <button class="delete-btn" data-id="401">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lee Ji-yeon</td>
+                        <td>Artist Manager</td>
+                        <td>Talent Management</td>
+                        <td>jiyeon.lee@k-ent.com</td>
+                        <td>+82 2-9876-5432</td>
+                        <td>
+                            <button class="edit-btn" data-id="402">Edit</button>
+                            <button class="delete-btn" data-id="402">Delete</button>
+                        </td>
+                    </tr>
+                    </tbody>
+            </table>
+            <p id="noStaffFound" class="hidden">No staff found matching your criteria.</p>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 K-Entertainment Co. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your_font_awesome_kit_code.js" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Staff Form Toggling
+            const showAddStaffFormBtn = document.getElementById('showAddStaffFormBtn');
+            const staffFormContainer = document.getElementById('staffFormContainer');
+            const cancelStaffFormBtn = document.getElementById('cancelStaffFormBtn');
+            const staffForm = document.getElementById('staffForm');
+            const staffFormTitle = document.getElementById('staffFormTitle');
+            const staffFormMode = document.getElementById('staffFormMode');
+
+            if (showAddStaffFormBtn) {
+                showAddStaffFormBtn.addEventListener('click', () => {
+                    staffFormContainer.classList.remove('hidden');
+                    staffFormTitle.textContent = 'Add New';
+                    staffFormMode.value = 'add';
+                    staffForm.reset();
+                });
+            }
+
+            if (cancelStaffFormBtn) {
+                cancelStaffFormBtn.addEventListener('click', () => {
+                    staffFormContainer.classList.add('hidden');
+                });
+            }
+
+            // Edit/Delete Staff Buttons
+            const staffTableBody = document.getElementById('staffTableBody');
+            if (staffTableBody) {
+                staffTableBody.addEventListener('click', (event) => {
+                    if (event.target.classList.contains('edit-btn')) {
+                        const staffId = event.target.dataset.id;
+                        console.log('Edit staff member with ID:', staffId);
+                        alert('Edit staff functionality not yet implemented via PHP. ID: ' + staffId);
+                        staffFormContainer.classList.remove('hidden');
+                        staffFormTitle.textContent = 'Edit';
+                        staffFormMode.value = 'edit';
+                        staffForm.elements['staff_id'].value = staffId;
+                        staffForm.elements['staff_full_name'].value = 'Simulated Staff ' + staffId;
+                    } else if (event.target.classList.contains('delete-btn')) {
+                        const staffId = event.target.dataset.id;
+                        if (confirm('Are you sure you want to delete this staff member?')) {
+                            console.log('Delete staff member with ID:', staffId);
+                            alert('Delete staff functionality not yet implemented via PHP. ID: ' + staffId);
+                            event.target.closest('tr').remove(); // Remove the table row
+                        }
+                    }
+                });
+            }
+
+            // Staff Search/Filter
+            const staffSearchInput = document.getElementById('staffSearchInput');
+            const staffFilterRole = document.getElementById('staffFilterRole');
+            const staffTable = document.querySelector('.staff-table');
+            const staffTableRows = staffTable ? staffTable.querySelectorAll('tbody tr') : [];
+            const noStaffFound = document.getElementById('noStaffFound');
+
+            function applyStaffFilters() {
+                const searchText = staffSearchInput ? staffSearchInput.value.toLowerCase() : '';
+                const filterRole = staffFilterRole ? staffFilterRole.value : 'all';
+
+                let foundCount = 0;
+
+                staffTableRows.forEach(row => {
+                    const fullName = row.cells[0].textContent.toLowerCase();
+                    const role = row.cells[1].textContent;
+
+                    let display = true;
+
+                    if (searchText && !fullName.includes(searchText)) {
+                        display = false;
+                    }
+                    if (filterRole !== 'all' && role !== filterRole) {
+                        display = false;
+                    }
+
+                    if (display) {
+                        row.style.display = ''; // Show row
+                        foundCount++;
+                    } else {
+                        row.style.display = 'none'; // Hide row
+                    }
+                });
+                if (noStaffFound) {
+                    noStaffFound.classList.toggle('hidden', foundCount > 0);
+                }
+            }
+
+            if (staffSearchInput) staffSearchInput.addEventListener('keyup', applyStaffFilters);
+            if (staffFilterRole) staffFilterRole.addEventListener('change', applyStaffFilters);
+            applyStaffFilters(); // Initial filter call
+        });
+    </script>
+</body>
+</html>

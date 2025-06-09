@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Entertainment Co. | Discography</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">K-Ent.</a>
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">About <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="about.html#company">Company</a>
+                        <a href="about.html#vision">Vision</a>
+                        <a href="about.html#history">History</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Talent <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="talent.html?type=all">All Talent</a>
+                        <a href="talent.html?type=artists">Artists</a>
+                        <a href="talent.html?type=actors">Actors</a>
+                        <a href="talent.html?type=soloists">Soloists</a>
+                        <a href="talent.html?type=groups">Groups</a>
+                    </div>
+                </li>
+                <li><a href="discography.html">Discography</a></li>
+                <li><a href="schedules.html">Schedules</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="staff.html">Staff</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page-content discography-page">
+        <h1>Our Discography</h1>
+
+        <section class="discography-controls">
+            <button id="showAddAlbumFormBtn" class="action-button">Add New Album</button>
+            <input type="text" id="albumSearchInput" placeholder="Search albums...">
+            <select id="albumFilterArtistGroup">
+                <option value="all">All Artists/Groups</option>
+                <option value="artist1">Solo Artist A</option>
+                <option value="group1">Group X</option>
+            </select>
+            <select id="albumFilterYear">
+                <option value="all">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+            </select>
+            <select id="albumSort">
+                <option value="release_desc">Release Date (Newest First)</option>
+                <option value="release_asc">Release Date (Oldest First)</option>
+                <option value="title_asc">Title (A-Z)</option>
+                <option value="title_desc">Title (Z-A)</option>
+            </select>
+        </section>
+
+        <section id="albumFormContainer" class="form-section hidden">
+            <h2><span id="albumFormTitle">Add New</span> Album</h2>
+            <form id="albumForm" action="php/process_album.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="albumId" name="album_id">
+                <input type="hidden" id="albumFormMode" name="form_mode" value="add">
+
+                <label for="albumTitle">Album Title:</label>
+                <input type="text" id="albumTitle" name="album_title" required>
+
+                <label for="albumReleaseDate">Release Date:</label>
+                <input type="date" id="albumReleaseDate" name="album_release_date">
+
+                <label for="albumArtistGroup">Artist/Group:</label>
+                <select id="albumArtistGroup" name="album_artist_group_id">
+                    <option value="">Select Artist/Group</option>
+                    <option value="1">Solo Artist A</option>
+                    <option value="101">Group X</option>
+                </select>
+
+                <label for="albumType">Album Type:</label>
+                <select id="albumType" name="album_type">
+                    <option value="Full Album">Full Album</option>
+                    <option value="EP">EP</option>
+                    <option value="Single">Single</option>
+                    <option value="OST">OST</option>
+                </select>
+
+                <label for="albumCover">Album Cover:</label>
+                <input type="file" id="albumCover" name="album_cover">
+                <img id="currentAlbumCover" src="" alt="Current Album Cover" style="max-width: 100px; display: none;">
+
+                <h3>Songs on Album:</h3>
+                <div id="songsList">
+                    <div class="song-entry">
+                        <input type="text" name="song_titles[]" placeholder="Song Title" required>
+                        <input type="text" name="song_durations[]" placeholder="Duration (e.g., 3:45)">
+                        <button type="button" class="remove-song-btn">Remove</button>
+                    </div>
+                </div>
+                <button type="button" id="addSongBtn" class="action-button">Add Another Song</button>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-button">Save Album</button>
+                    <button type="button" id="cancelAlbumFormBtn" class="cancel-button">Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="albums-display">
+            <div id="albumGrid" class="album-grid">
+                <div class="album-card">
+                    <img src="images/album_placeholder.jpg" alt="Album Title">
+                    <h3>Dreamcatcher</h3>
+                    <p class="album-artist">by Solo Artist A</p>
+                    <p class="album-release">Released: 2023-11-20</p>
+                    <p class="album-type">EP</p>
+                    <div class="album-songs-list">
+                        <h4>Tracks:</h4>
+                        <ul>
+                            <li>Song 1 (3:20)</li>
+                            <li>Song 2 (4:10)</li>
+                        </ul>
+                    </div>
+                    <div class="card-actions">
+                        <button class="edit-btn" data-id="201">Edit</button>
+                        <button class="delete-btn" data-id="201">Delete</button>
+                    </div>
+                </div>
+                <div class="album-card">
+                    <img src="images/album_placeholder.jpg" alt="Album Title">
+                    <h3>Starlight Symphony</h3>
+                    <p class="album-artist">by Group X</p>
+                    <p class="album-release">Released: 2024-05-01</p>
+                    <p class="album-type">Full Album</p>
+                    <div class="album-songs-list">
+                        <h4>Tracks:</h4>
+                        <ul>
+                            <li>Intro (1:30)</li>
+                            <li>Main Track (3:50)</li>
+                            <li>B-side 1 (3:10)</li>
+                            <li>B-side 2 (4:00)</li>
+                        </ul>
+                    </div>
+                    <div class="card-actions">
+                        <button class="edit-btn" data-id="202">Edit</button>
+                        <button class="delete-btn" data-id="202">Delete</button>
+                    </div>
+                </div>
+                </div>
+            <p id="noAlbumFound" class="hidden">No albums found matching your criteria.</p>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 K-Entertainment Co. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your_font_awesome_kit_code.js" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Album Form Toggling
+            const showAddAlbumFormBtn = document.getElementById('showAddAlbumFormBtn');
+            const albumFormContainer = document.getElementById('albumFormContainer');
+            const cancelAlbumFormBtn = document.getElementById('cancelAlbumFormBtn');
+            const albumForm = document.getElementById('albumForm');
+            const albumFormTitle = document.getElementById('albumFormTitle');
+            const albumFormMode = document.getElementById('albumFormMode');
+            const addSongBtn = document.getElementById('addSongBtn');
+            const songsList = document.getElementById('songsList');
+
+            if (showAddAlbumFormBtn) {
+                showAddAlbumFormBtn.addEventListener('click', () => {
+                    albumFormContainer.classList.remove('hidden');
+                    albumFormTitle.textContent = 'Add New';
+                    albumFormMode.value = 'add';
+                    albumForm.reset();
+                    songsList.innerHTML = ''; // Clear songs list when adding new album
+                    addSongBtn.click(); // Add one song entry by default
+                });
+            }
+
+            if (cancelAlbumFormBtn) {
+                cancelAlbumFormBtn.addEventListener('click', () => {
+                    albumFormContainer.classList.add('hidden');
+                });
+            }
+
+            // Dynamic Song Entry
+            if (addSongBtn) {
+                addSongBtn.addEventListener('click', () => {
+                    const songEntryDiv = document.createElement('div');
+                    songEntryDiv.classList.add('song-entry');
+                    songEntryDiv.innerHTML = `
+                        <input type="text" name="song_titles[]" placeholder="Song Title" required>
+                        <input type="text" name="song_durations[]" placeholder="Duration (e.g., 3:45)">
+                        <button type="button" class="remove-song-btn">Remove</button>
+                    `;
+                    songsList.appendChild(songEntryDiv);
+                });
+            }
+
+            // Remove Song Entry
+            if (songsList) {
+                songsList.addEventListener('click', (event) => {
+                    if (event.target.classList.contains('remove-song-btn')) {
+                        event.target.closest('.song-entry').remove();
+                    }
+                });
+            }
+
+            // Edit/Delete Album Buttons
+            const albumDisplayArea = document.querySelector('.albums-display #albumGrid');
+            if (albumDisplayArea) {
+                albumDisplayArea.addEventListener('click', (event) => {
+                    if (event.target.classList.contains('edit-btn')) {
+                        const albumId = event.target.dataset.id;
+                        console.log('Edit album with ID:', albumId);
+                        alert('Edit album functionality not yet implemented via PHP. ID: ' + albumId);
+                        albumFormContainer.classList.remove('hidden');
+                        albumFormTitle.textContent = 'Edit';
+                        albumFormMode.value = 'edit';
+                        albumForm.elements['album_id'].value = albumId;
+                        // Simulate populating album details and songs
+                        albumForm.elements['album_title'].value = 'Simulated Album ' + albumId;
+                        songsList.innerHTML = '';
+                        addSongBtn.click(); // Add a placeholder song
+                    } else if (event.target.classList.contains('delete-btn')) {
+                        const albumId = event.target.dataset.id;
+                        if (confirm('Are you sure you want to delete this album?')) {
+                            console.log('Delete album with ID:', albumId);
+                            alert('Delete album functionality not yet implemented via PHP. ID: ' + albumId);
+                            event.target.closest('.album-card').remove();
+                        }
+                    }
+                });
+            }
+
+            // Album Search/Filter/Sort
+            const albumSearchInput = document.getElementById('albumSearchInput');
+            const albumFilterArtistGroup = document.getElementById('albumFilterArtistGroup');
+            const albumFilterYear = document.getElementById('albumFilterYear');
+            const albumSort = document.getElementById('albumSort');
+            const albumGrid = document.getElementById('albumGrid');
+            const noAlbumFound = document.getElementById('noAlbumFound');
+
+            function applyAlbumFiltersAndSort() {
+                const searchText = albumSearchInput ? albumSearchInput.value.toLowerCase() : '';
+                const filterArtistGroup = albumFilterArtistGroup ? albumFilterArtistGroup.value : 'all';
+                const filterYear = albumFilterYear ? albumFilterYear.value : 'all';
+                const sortOrder = albumSort ? albumSort.value : 'release_desc';
+
+                console.log(`Filtering: Search="${searchText}", Artist/Group="${filterArtistGroup}", Year="${filterYear}", Sort="${sortOrder}"`);
+
+                const albumCards = Array.from(albumGrid ? albumGrid.querySelectorAll('.album-card') : []);
+                let foundCount = 0;
+
+                albumCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const artist = card.querySelector('.album-artist') ? card.querySelector('.album-artist').textContent.toLowerCase() : '';
+                    const releaseDate = card.querySelector('.album-release') ? card.querySelector('.album-release').textContent.replace('Released: ', '') : '';
+                    const releaseYear = releaseDate ? new Date(releaseDate).getFullYear().toString() : '';
+
+                    let display = true;
+
+                    if (searchText && !title.includes(searchText)) {
+                        display = false;
+                    }
+                    if (filterArtistGroup !== 'all' && !artist.includes(filterArtistGroup.replace('artist', '').replace('group', ''))) { // Simplistic check
+                        display = false;
+                    }
+                    if (filterYear !== 'all' && releaseYear !== filterYear) {
+                        display = false;
+                    }
+
+                    if (display) {
+                        card.style.display = 'block';
+                        foundCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Client-side sorting (PHP would ideally handle this)
+                albumCards.sort((a, b) => {
+                    const aTitle = a.querySelector('h3').textContent.toLowerCase();
+                    const bTitle = b.querySelector('h3').textContent.toLowerCase();
+                    const aRelease = new Date(a.querySelector('.album-release').textContent.replace('Released: ', ''));
+                    const bRelease = new Date(b.querySelector('.album-release').textContent.replace('Released: ', ''));
+
+                    if (sortOrder === 'release_desc') return bRelease - aRelease;
+                    if (sortOrder === 'release_asc') return aRelease - bRelease;
+                    if (sortOrder === 'title_asc') return aTitle.localeCompare(bTitle);
+                    if (sortOrder === 'title_desc') return bTitle.localeCompare(aTitle);
+                    return 0;
+                });
+
+                if (albumGrid) {
+                    albumGrid.innerHTML = ''; // Clear current grid
+                    albumCards.forEach(card => albumGrid.appendChild(card)); // Append sorted cards
+                }
+
+                if (noAlbumFound) {
+                    noAlbumFound.classList.toggle('hidden', foundCount > 0);
+                }
+            }
+
+            if (albumSearchInput) albumSearchInput.addEventListener('keyup', applyAlbumFiltersAndSort);
+            if (albumFilterArtistGroup) albumFilterArtistGroup.addEventListener('change', applyAlbumFiltersAndSort);
+            if (albumFilterYear) albumFilterYear.addEventListener('change', applyAlbumFiltersAndSort);
+            if (albumSort) albumSort.addEventListener('change', applyAlbumFiltersAndSort);
+            applyAlbumFiltersAndSort(); // Initial call
+        });
+    </script>
+</body>
+</html>

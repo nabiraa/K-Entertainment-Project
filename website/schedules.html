@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Entertainment Co. | Schedules & Concerts</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">K-Ent.</a>
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">About <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="about.html#company">Company</a>
+                        <a href="about.html#vision">Vision</a>
+                        <a href="about.html#history">History</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Talent <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="talent.html?type=all">All Talent</a>
+                        <a href="talent.html?type=artists">Artists</a>
+                        <a href="talent.html?type=actors">Actors</a>
+                        <a href="talent.html?type=soloists">Soloists</a>
+                        <a href="talent.html?type=groups">Groups</a>
+                    </div>
+                </li>
+                <li><a href="discography.html">Discography</a></li>
+                <li><a href="schedules.html">Schedules</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="staff.html">Staff</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page-content schedules-page">
+        <h1>Schedules & Concerts</h1>
+
+        <section class="schedule-controls">
+            <button id="showAddScheduleFormBtn" class="action-button">Add New Schedule Item</button>
+            <input type="text" id="scheduleSearchInput" placeholder="Search events...">
+            <select id="scheduleFilterType">
+                <option value="all">All Types</option>
+                <option value="Concert">Concert</option>
+                <option value="Fanmeet">Fanmeet</moption>
+                <option value="Broadcast">Broadcast</option>
+                <option value="Event">Event</option>
+            </select>
+            <input type="date" id="scheduleFilterDate" title="Filter by Date">
+        </section>
+
+        <section id="scheduleFormContainer" class="form-section hidden">
+            <h2><span id="scheduleFormTitle">Add New</span> Schedule Item</h2>
+            <form id="scheduleForm" action="php/process_schedule.php" method="POST">
+                <input type="hidden" id="scheduleId" name="schedule_id">
+                <input type="hidden" id="scheduleFormMode" name="form_mode" value="add">
+
+                <label for="eventName">Event Name:</label>
+                <input type="text" id="eventName" name="event_name" required>
+
+                <label for="eventType">Event Type:</label>
+                <select id="eventType" name="event_type">
+                    <option value="Concert">Concert</option>
+                    <option value="Fanmeet">Fanmeet</option>
+                    <option value="Broadcast">Broadcast</option>
+                    <option value="Event">Event</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="eventDate">Date:</label>
+                <input type="date" id="eventDate" name="event_date" required>
+
+                <label for="eventTime">Time (Optional):</label>
+                <input type="time" id="eventTime" name="event_time">
+
+                <label for="eventLocation">Location:</label>
+                <input type="text" id="eventLocation" name="event_location">
+
+                <label for="attendingTalent">Attending Artists/Groups:</label>
+                <select id="attendingTalent" name="attending_talent[]" multiple>
+                    <option value="artist1">Solo Artist A</option>
+                    <option value="group1">Group X</option>
+                </select>
+
+                <label for="ticketPrice">Ticket Price (if applicable):</label>
+                <input type="number" step="0.01" id="ticketPrice" name="ticket_price" placeholder="e.g., 50.00">
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-button">Save Schedule</button>
+                    <button type="button" id="cancelScheduleFormBtn" class="cancel-button">Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="schedules-display">
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Event Name</th>
+                        <th>Type</th>
+                        <th>Location</th>
+                        <th>Attending</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="scheduleTableBody">
+                    <tr>
+                        <td>2025-06-15</td>
+                        <td>19:00</td>
+                        <td>Spring Melody Concert</td>
+                        <td>Concert</td>
+                        <td>Seoul Arena</td>
+                        <td>Group X, Solo Artist A</td>
+                        <td>$85.00</td>
+                        <td>
+                            <button class="edit-btn" data-id="301">Edit</button>
+                            <button class="delete-btn" data-id="301">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2025-07-01</td>
+                        <td>14:00</td>
+                        <td>Rhythm Breakers Fanmeet</td>
+                        <td>Fanmeet</td>
+                        <td>Olympic Hall</td>
+                        <td>Rhythm Breakers</td>
+                        <td>$40.00</td>
+                        <td>
+                            <button class="edit-btn" data-id="302">Edit</button>
+                            <button class="delete-btn" data-id="302">Delete</button>
+                        </td>
+                    </tr>
+                    </tbody>
+            </table>
+            <p id="noScheduleFound" class="hidden">No schedule items found matching your criteria.</p>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 K-Entertainment Co. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your_font_awesome_kit_code.js" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Schedule Form Toggling
+            const showAddScheduleFormBtn = document.getElementById('showAddScheduleFormBtn');
+            const scheduleFormContainer = document.getElementById('scheduleFormContainer');
+            const cancelScheduleFormBtn = document.getElementById('cancelScheduleFormBtn');
+            const scheduleForm = document.getElementById('scheduleForm');
+            const scheduleFormTitle = document.getElementById('scheduleFormTitle');
+            const scheduleFormMode = document.getElementById('scheduleFormMode');
+
+            if (showAddScheduleFormBtn) {
+                showAddScheduleFormBtn.addEventListener('click', () => {
+                    scheduleFormContainer.classList.remove('hidden');
+                    scheduleFormTitle.textContent = 'Add New';
+                    scheduleFormMode.value = 'add';
+                    scheduleForm.reset();
+                });
+            }
+
+            if (cancelScheduleFormBtn) {
+                cancelScheduleFormBtn.addEventListener('click', () => {
+                    scheduleFormContainer.classList.add('hidden');
+                });
+            }
+
+            // Edit/Delete Schedule Buttons
+            const scheduleTableBody = document.getElementById('scheduleTableBody');
+            if (scheduleTableBody) {
+                scheduleTableBody.addEventListener('click', (event) => {
+                    if (event.target.classList.contains('edit-btn')) {
+                        const scheduleId = event.target.dataset.id;
+                        console.log('Edit schedule item with ID:', scheduleId);
+                        alert('Edit schedule functionality not yet implemented via PHP. ID: ' + scheduleId);
+                        scheduleFormContainer.classList.remove('hidden');
+                        scheduleFormTitle.textContent = 'Edit';
+                        scheduleFormMode.value = 'edit';
+                        scheduleForm.elements['schedule_id'].value = scheduleId;
+                        scheduleForm.elements['event_name'].value = 'Simulated Event ' + scheduleId;
+                    } else if (event.target.classList.contains('delete-btn')) {
+                        const scheduleId = event.target.dataset.id;
+                        if (confirm('Are you sure you want to delete this schedule item?')) {
+                            console.log('Delete schedule item with ID:', scheduleId);
+                            alert('Delete schedule functionality not yet implemented via PHP. ID: ' + scheduleId);
+                            event.target.closest('tr').remove(); // Remove the table row
+                        }
+                    }
+                });
+            }
+
+            // Schedule Search/Filter
+            const scheduleSearchInput = document.getElementById('scheduleSearchInput');
+            const scheduleFilterType = document.getElementById('scheduleFilterType');
+            const scheduleFilterDate = document.getElementById('scheduleFilterDate');
+            const scheduleTable = document.querySelector('.schedule-table');
+            const scheduleTableRows = scheduleTable ? scheduleTable.querySelectorAll('tbody tr') : [];
+            const noScheduleFound = document.getElementById('noScheduleFound');
+
+
+            function applyScheduleFilters() {
+                const searchText = scheduleSearchInput ? scheduleSearchInput.value.toLowerCase() : '';
+                const filterType = scheduleFilterType ? scheduleFilterType.value : 'all';
+                const filterDate = scheduleFilterDate ? scheduleFilterDate.value : '';
+
+                let foundCount = 0;
+
+                scheduleTableRows.forEach(row => {
+                    const eventName = row.cells[2].textContent.toLowerCase(); // Event Name column
+                    const eventType = row.cells[3].textContent; // Type column
+                    const eventDate = row.cells[0].textContent; // Date column
+
+                    let display = true;
+
+                    if (searchText && !eventName.includes(searchText)) {
+                        display = false;
+                    }
+                    if (filterType !== 'all' && eventType !== filterType) {
+                        display = false;
+                    }
+                    if (filterDate && eventDate !== filterDate) {
+                        display = false;
+                    }
+
+                    if (display) {
+                        row.style.display = ''; // Show row
+                        foundCount++;
+                    } else {
+                        row.style.display = 'none'; // Hide row
+                    }
+                });
+                if (noScheduleFound) {
+                    noScheduleFound.classList.toggle('hidden', foundCount > 0);
+                }
+            }
+
+            if (scheduleSearchInput) scheduleSearchInput.addEventListener('keyup', applyScheduleFilters);
+            if (scheduleFilterType) scheduleFilterType.addEventListener('change', applyScheduleFilters);
+            if (scheduleFilterDate) scheduleFilterDate.addEventListener('change', applyScheduleFilters);
+            applyScheduleFilters(); // Initial filter call
+        });
+    </script>
+</body>
+</html>

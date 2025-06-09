@@ -1,0 +1,12 @@
+# Ignore system and temp files
+.DS_Store
+Thumbs.db
+
+# Ignore build/backup files
+*.log
+*.tmp
+*.bak
+
+# Ignore Office docs (if not needed)
+*.docx
+*.pdf

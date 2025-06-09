@@ -1,0 +1,738 @@
+/* Reset & Base Styles */
+:root {
+    --primary-color: #3f51b5; /* Muted Indigo */
+    --accent-color: #a76eaf; /* Muted Lavender */
+    --text-color: #e0e0e0; /* Light gray for text on dark background */
+    --bg-dark: #1a1a2e; /* Deep dark background */
+    --bg-light: #2c2c4d; /* Slightly lighter dark for sections */
+    --border-color: #4a4a6e;
+    --card-bg: #34345c;
+    --button-bg-success: #4CAF50;
+    --button-bg-danger: #f44336;
+    --button-bg-info: #2196F3;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-accent: 'Playfair Display', serif;
+}
+
+* {
+    box-sizing: border-box; /* Ensures padding and border are included in element's total width/height */
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%; /* Make html and body take full viewport height */
+    overflow-x: hidden; /* Prevent horizontal scroll bar */
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-dark);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column; /* For sticky footer */
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+}
+
+.page-content {
+    flex: 1; /* Allows content to expand and push footer down */
+    padding: 2.5rem 1.25rem; /* Responsive padding */
+    max-width: 75rem; /* Max width for content, approx 1200px */
+    margin: 2rem auto; /* Top/bottom margin, auto left/right for centering */
+    background-color: var(--bg-light);
+    border-radius: 0.5rem; /* Rounded corners */
+    box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3); /* Soft shadow */
+    width: calc(100% - 2.5rem); /* Adjust width to account for margin */
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    margin-bottom: 0.9375rem; /* Responsive margin */
+}
+
+h1 { font-size: 2.5rem; text-align: center; margin-bottom: 1.875rem; }
+h2 { font-size: 2rem; border-bottom: 0.125rem solid var(--border-color); padding-bottom: 0.625rem; margin-top: 1.875rem; }
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+button, .action-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.625rem 1.25rem; /* Responsive padding */
+    border: none;
+    border-radius: 0.3125rem; /* Rounded corners */
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Subtle button shadow */
+}
+
+button:hover, .action-button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-0.125rem); /* Lift effect on hover */
+}
+
+/* Header & Navigation */
+.main-header {
+    background-color: rgba(44, 44, 77, 0.5); /* Semi-transparent background */
+    padding: 0.9375rem 2.5rem; /* Responsive padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.2);
+    position: fixed; /* Fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it stays on top */
+    transition: background-color 0.4s ease; /* Smooth transition for background */
+}
+
+.main-header:hover {
+    background-color: var(--bg-light); /* Becomes solid on hover */
+}
+
+.logo a {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-color);
+    text-transform: uppercase;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.main-nav ul li {
+    position: relative; /* For dropdowns */
+    margin-left: 1.875rem; /* Responsive margin */
+}
+
+.main-nav ul li a {
+    color: var(--text-color);
+    font-weight: bold;
+    padding: 0.625rem 0; /* Responsive padding */
+    display: block;
+    text-transform: uppercase;
+}
+
+.main-nav ul li a:hover,
+.main-nav ul li a.active {
+    color: var(--accent-color);
+}
+
+/* Dropdown specific styles */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--bg-light);
+    min-width: 10rem; /* Responsive min-width */
+    box-shadow: 0px 0.5rem 1rem 0px rgba(0,0,0,0.4);
+    z-index: 1;
+    border-radius: 0.3125rem; /* Rounded corners */
+    overflow: hidden;
+    top: 100%; /* Position below the parent link */
+    left: 0;
+    opacity: 0;
+    transform: translateY(0.625rem); /* Slight initial offset */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-content a {
+    color: var(--text-color);
+    padding: 0.75rem 1rem; /* Responsive padding */
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    text-transform: none; /* Reset uppercase for dropdown items */
+    font-weight: normal; /* Reset font weight */
+}
+
+.dropdown-content a:hover {
+    background-color: var(--border-color);
+    color: var(--accent-color);
+}
+
+/* Home Page Specifics */
+.home-page {
+    /* Override default page-content styling for full-width slideshow */
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+    width: 100%;
+    background-color: transparent; /* No background for this page */
+    box-shadow: none; /* No shadow for this page */
+}
+
+.slideshow-container {
+    width: 100%;
+    position: relative;
+    margin: 0; /* Remove auto margin to fill width */
+    overflow: hidden;
+    border-radius: 0; /* No rounded corners for full page */
+    box-shadow: none; /* No shadow */
+    height: calc(100vh - 6.25rem); /* Full viewport height minus header/footer approximate height */
+    display: flex;
+    align-items: center; /* Vertically center content if needed */
+    justify-content: center; /* Horizontally center content if needed */
+}
+
+.mySlides {
+    display: none;
+    width: 100%;
+    height: 100%; /* Take full height of container */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.mySlides img {
+    width: 100%;
+    height: 100%; /* Take full height of container */
+    display: block;
+    object-fit: cover; /* Cover the area, cropping if necessary */
+}
+
+.slide-text {
+    color: rgba(255, 255, 255, 0.85); /* Slightly muted white */
+    font-family: var(--font-accent); /* Dainty font */
+    font-weight: 300; /* Lighter font weight for minimal look */
+    font-size: 2.8rem; /* Large but not overly bold */
+    text-align: center;
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for perfect centering */
+    width: 80%; /* Max width for text */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7); /* Very subtle shadow */
+    background: none; /* No background behind text */
+    padding: 0; /* No padding */
+}
+
+/* Dots */
+.slide-dots {
+    text-align: center;
+    padding: 0.625rem 0; /* Responsive padding */
+    background-color: rgba(0,0,0,0.3); /* Subtle background for dots */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+.dot {
+    cursor: pointer;
+    height: 0.75rem; /* Responsive size */
+    width: 0.75rem; /* Responsive size */
+    margin: 0 0.25rem; /* Responsive margin */
+    background-color: var(--border-color);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active-dot, .dot:hover {
+    background-color: var(--primary-color);
+}
+
+/* Fade animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+/* About Page Specifics */
+.about-section {
+    padding: 1.25rem;
+    margin-bottom: 1.875rem;
+    background-color: var(--card-bg);
+    border-radius: 0.5rem;
+    opacity: 0; /* Hidden by default for JS animation */
+    transform: translateY(1.25rem); /* Slight initial offset */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.about-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about-section h2 {
+    color: var(--accent-color);
+    border-bottom-color: var(--border-color);
+}
+
+.about-section p {
+    margin-bottom: 0.9375rem;
+}
+
+.history-timeline {
+    border-left: 0.125rem solid var(--primary-color);
+    padding-left: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.5625rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.75rem; /* Adjust position based on border-left */
+    top: 0.3125rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    border: 0.1875rem solid var(--bg-dark);
+}
+
+.timeline-item h3 {
+    color: var(--text-color);
+    margin-bottom: 0.3125rem;
+    font-size: 1.3rem;
+}
+
+/* Forms & Controls */
+.talent-controls, .group-controls, .discography-controls, .schedule-controls, .news-controls, .staff-controls {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    gap: 0.9375rem; /* Responsive gap */
+    margin-bottom: 1.5625rem;
+    align-items: center;
+}
+
+.search-filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    flex-grow: 1; /* Allow it to take available space */
+}
+
+input[type="text"],
+input[type="date"],
+input[type="file"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea { /* Added textarea for completeness if you use it later */
+    padding: 0.625rem;
+    border: 0.0625rem solid var(--border-color);
+    border-radius: 0.3125rem;
+    background-color: var(--bg-dark);
+    color: var(--text-color);
+    font-size: 1rem;
+    flex-grow: 1; /* Allows inputs to fill available space */
+    min-width: 9.375rem; /* Minimum width before wrapping */
+}
+
+input[type="file"] {
+    padding: 0.5rem;
+}
+input[type="file"]::file-selector-button {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 0.3125rem;
+    cursor: pointer;
+    margin-right: 0.625rem;
+}
+input[type="file"]::file-selector-button:hover {
+    background-color: var(--primary-color);
+}
+
+.form-section {
+    background-color: var(--card-bg);
+    padding: 1.5625rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5625rem;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.form-section.hidden {
+    display: none;
+}
+
+.form-section form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); /* Two columns on larger screens */
+    gap: 0.9375rem;
+}
+
+.form-section label {
+    font-weight: bold;
+    margin-bottom: 0.3125rem;
+    color: var(--accent-color);
+    display: block; /* Ensure label takes full width */
+}
+/* For form elements directly following label */
+.form-section label + input,
+.form-section label + select,
+.form-section label + textarea {
+    margin-top: -0.3125rem; /* Pull up to reduce gap from label */
+}
+
+.checkbox-group {
+    grid-column: 1 / -1; /* Make checkbox group span full width */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9375rem;
+    align-items: center;
+    margin-bottom: 0.625rem;
+}
+.checkbox-group label {
+    display: inline-flex; /* Keep checkboxes/labels inline */
+    align-items: center;
+    font-weight: normal;
+    color: var(--text-color);
+    margin-bottom: 0;
+}
+.checkbox-group input[type="checkbox"] {
+    margin-right: 0.3125rem;
+    min-width: unset; /* Override flex-grow */
+    flex-grow: 0; /* Prevent checkbox from stretching */
+    width: auto;
+    height: auto;
+    accent-color: var(--primary-color); /* Style checkbox itself */
+}
+
+.form-actions {
+    grid-column: 1 / -1; /* Buttons span full width */
+    display: flex;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+    justify-content: flex-end; /* Align buttons to the right */
+}
+
+.submit-button { background-color: var(--button-bg-success); }
+.submit-button:hover { background-color: #45a049; } /* Darker green */
+.cancel-button { background-color: var(--button-bg-danger); }
+.cancel-button:hover { background-color: #d32f2f; } /* Darker red */
+
+/* Talent/Group/Album Grid Display */
+.talent-grid, .group-grid, .album-grid, .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); /* Flexible columns, min 250px */
+    gap: 1.5625rem; /* Responsive gap */
+    margin-top: 1.25rem;
+}
+
+.talent-card, .group-card, .album-card, .news-item {
+    background-color: var(--card-bg);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.3);
+    text-align: center;
+    padding-bottom: 0.9375rem;
+    transition: transform 0.3s ease;
+    display: flex; /* Make card content a flex column */
+    flex-direction: column;
+}
+
+.talent-card:hover, .group-card:hover, .album-card:hover, .news-item:hover {
+    transform: translateY(-0.3125rem);
+}
+
+.talent-card img, .group-card img, .album-card img {
+    width: 100%;
+    height: 15.625rem; /* Fixed height for consistent image display */
+    object-fit: cover; /* Cover the area, cropping if necessary */
+    display: block;
+    border-bottom: 0.0625rem solid var(--border-color);
+    margin-bottom: 0.9375rem;
+}
+
+.talent-card h3, .group-card h3, .album-card h3 {
+    color: var(--text-color);
+    margin: 0 0.625rem 0.3125rem;
+    font-size: 1.4rem;
+}
+
+.talent-card p, .group-card p, .album-card p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.3125rem;
+    padding: 0 0.625rem;
+}
+
+.album-songs-list {
+    text-align: left;
+    padding: 0 0.9375rem;
+    margin-top: 0.625rem;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    flex-grow: 1; /* Pushes card-actions to bottom */
+}
+.album-songs-list h4 {
+    font-size: 1rem;
+    color: var(--accent-color);
+    margin-bottom: 0.3125rem;
+}
+.album-songs-list ul {
+    list-style: none;
+    padding-left: 0.625rem;
+}
+.album-songs-list li {
+    margin-bottom: 0.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.song-entry {
+    display: flex;
+    gap: 0.625rem;
+    margin-bottom: 0.625rem;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping */
+}
+.song-entry input {
+    flex-grow: 1;
+    min-width: 8rem; /* Ensure input is not too small */
+}
+.song-entry button {
+    flex-shrink: 0; /* Prevent button from shrinking */
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    background-color: var(--button-bg-danger);
+}
+
+.card-actions {
+    margin-top: 0.9375rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 0 0.625rem;
+}
+
+.card-actions button {
+    padding: 0.5rem 0.9375rem;
+    font-size: 0.9rem;
+    box-shadow: none; /* Remove redundant shadow */
+}
+
+.card-actions .edit-btn { background-color: var(--button-bg-info); }
+.card-actions .edit-btn:hover { background-color: #1976D2; }
+.card-actions .delete-btn { background-color: var(--button-bg-danger); }
+.card-actions .delete-btn:hover { background-color: #d32f2f; }
+
+/* News Section */
+.news-item {
+    text-align: left; /* Override card text-align */
+}
+.news-item h3 {
+    color: var(--accent-color);
+    font-size: 1.3rem;
+    margin-bottom: 0.625rem;
+}
+.news-item .news-date {
+    font-size: 0.85rem;
+    color: var(--border-color);
+    margin-bottom: 0.625rem;
+}
+.news-item p {
+    font-size: 0.95rem;
+    margin-bottom: 0.9375rem;
+}
+.news-item .read-more {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+
+/* Schedules & Staff Tables */
+.schedule-table, .staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.25rem;
+    background-color: var(--card-bg); /* Table background */
+    border-radius: 0.5rem;
+    overflow: hidden; /* For rounded corners on table */
+}
+
+.schedule-table thead, .staff-table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.schedule-table th, .staff-table th,
+.schedule-table td, .staff-table td {
+    border: 0.0625rem solid var(--border-color);
+    padding: 0.75rem;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.schedule-table tbody tr:nth-child(even), .staff-table tbody tr:nth-child(even) {
+    background-color: rgba(0,0,0,0.1); /* Subtle stripe for readability */
+}
+
+.schedule-table tbody tr:hover, .staff-table tbody tr:hover {
+    background-color: var(--border-color);
+}
+
+/* Footer */
+.main-footer {
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    text-align: center;
+    padding: 1.25rem;
+    margin-top: auto; /* Pushes footer to the bottom */
+    box-shadow: 0 -0.125rem 0.625rem rgba(0, 0, 0, 0.2);
+}
+
+.footer-content {
+    max-width: 75rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.social-links a {
+    font-size: 1.5rem;
+    margin: 0 0.625rem;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+#noTalentFound, #noGroupFound, #noAlbumFound, #noScheduleFound, #noNewsFound, #noStaffFound {
+    text-align: center;
+    margin-top: 2rem;
+    font-style: italic;
+    color: var(--border-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-header {
+        flex-direction: column;
+        padding: 0.9375rem 1.25rem; /* Adjust padding for mobile */
+        /* Make background fully opaque on mobile for better visibility */
+        background-color: var(--bg-light);
+    }
+    .main-header:hover { /* Disable hover effect on mobile as background is already opaque */
+        background-color: var(--bg-light);
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0.9375rem;
+    }
+    .main-nav ul li {
+        margin: 0.3125rem 0;
+    }
+    .dropdown-content {
+        position: static; /* Stack dropdown items vertically */
+        box-shadow: none;
+        min-width: auto;
+        border-radius: 0;
+        opacity: 1; /* Always visible if parent is hover/clicked */
+        transform: translateY(0);
+    }
+
+    .page-content {
+        padding: 0.9375rem;
+        margin: 0.9375rem auto;
+        width: calc(100% - 1.25rem); /* Adjust width for smaller margins */
+    }
+
+    .home-page .slideshow-container {
+        height: calc(100vh - 4.5rem); /* Adjust height for smaller header/footer on mobile */
+    }
+    .slide-text {
+        font-size: 1.8rem; /* Smaller text on mobile */
+        width: 90%;
+    }
+
+    .talent-controls, .group-controls, .discography-controls, .schedule-controls, .news-controls, .staff-controls,
+    .search-filter-container, .song-entry, .form-actions {
+        flex-direction: column;
+        align-items: stretch; /* Stretch items to full width */
+    }
+
+    input[type="text"], input[type="date"], input[type="file"], input[type="email"], input[type="tel"], input[type="number"], select, textarea {
+        width: 100%;
+        min-width: unset; /* Remove min-width to allow full flexibility */
+    }
+
+    .form-section form {
+        grid-template-columns: 1fr; /* Single column for forms on small screens */
+    }
+
+    .talent-grid, .group-grid, .album-grid, .news-grid {
+        grid-template-columns: 1fr; /* Single column on small screens */
+    }
+
+    .schedule-table th, .staff-table th,
+    .schedule-table td, .staff-table td {
+        padding: 0.5rem; /* Smaller padding for table cells */
+        font-size: 0.8rem;
+    }
+
+    /* Hide less important columns on small screens for tables */
+    .schedule-table th:nth-child(2), .schedule-table td:nth-child(2), /* Time */
+    .schedule-table th:nth-child(6), .schedule-table td:nth-child(6), /* Attending */
+    .schedule-table th:nth-child(7), .schedule-table td:nth-child(7), /* Price */
+    .staff-table th:nth-child(4), .staff-table td:nth-child(4), /* Email */
+    .staff-table th:nth-child(5), .staff-table td:nth-child(5) { /* Phone */
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header {
+        padding: 0.625rem 0.9375rem;
+    }
+    .logo a {
+        font-size: 1.5rem;
+    }
+    .main-nav ul li a {
+        font-size: 0.9rem;
+    }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.6rem; }
+    .slide-text {
+        font-size: 1.5rem;
+        padding: 0.625rem;
+    }
+}
